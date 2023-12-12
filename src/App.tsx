@@ -167,7 +167,7 @@ function App() {
             width={'2.9%'}
             style={{ marginBottom: 'auto', marginTop: 'auto' }}
           />
-          <b className="headerTitle">N2 TREES</b>
+          <b className="headerTitle">MMSP TREES</b>
           <div className="date">As of December 11, 2023</div>
 
           <div className="dropdownFilter">
@@ -194,10 +194,10 @@ function App() {
             </div>
           </div>
           <img
-            src="https://EijiGorilla.github.io/Symbols/Projec_Logo/GCR LOGO.png"
-            alt="GCR Logo"
-            height={'4.4%'}
-            width={'4.4%'}
+            src="https://EijiGorilla.github.io/Symbols/Projec_Logo/MMSP.png"
+            alt="MMSP Logo"
+            height={'4.6%'}
+            width={'4.6%'}
             style={{
               marginBottom: 'auto',
               marginTop: 'auto',
