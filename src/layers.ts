@@ -8,6 +8,16 @@ import {
   SimpleLineSymbol,
 } from '@arcgis/core/symbols';
 
+/* Standalone table for Dates */
+export const dateTable = new FeatureLayer({
+  portalItem: {
+    id: '8a7097f019e14e488e31235519a963fd',
+    portal: {
+      url: 'https://gis.railway-sector.com/portal',
+    },
+  },
+});
+
 /* Station Layer */
 export const stationLayer = new FeatureLayer({
   portalItem: {

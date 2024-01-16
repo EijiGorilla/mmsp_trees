@@ -27,8 +27,11 @@ import { DropDownData } from './customClass';
 import TreeCuttingChart from './components/TreeCuttingChart';
 import TreeCompensationChart from './components/TreeCompensationChart';
 import { treeCuttingLayer } from './layers';
+import { dateUpdate } from './Query';
 
 function App() {
+  const [asOfDate, setAsOfDate] = useState<undefined | any | unknown>(null);
+
   //**** Set states */
   const mapDiv = useRef(null);
   const layerListDiv = useRef<HTMLDivElement | undefined | any>(null);
@@ -54,6 +57,10 @@ function App() {
 
     dropdownData.dropDownQuery().then((response: any) => {
       setInitContractPackage(response);
+    });
+
+    dateUpdate().then((response: any) => {
+      setAsOfDate(response);
     });
   }, []);
 
@@ -168,7 +175,7 @@ function App() {
             style={{ marginBottom: 'auto', marginTop: 'auto' }}
           />
           <b className="headerTitle">MMSP TREES</b>
-          <div className="date">As of January 8, 2024</div>
+          <div className="date">{!asOfDate ? '' : 'As of ' + asOfDate}</div>
 
           <div className="dropdownFilter">
             <div className="dropdownFilterLayout">

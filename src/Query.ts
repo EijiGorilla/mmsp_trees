@@ -5,10 +5,45 @@ import {
   colorsCompen,
   cuttingStatus,
   compenStatus,
+  dateTable,
 } from './layers';
 import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import * as am5 from '@amcharts/amcharts5';
 import { view } from './Scene';
+
+// Updat date
+export async function dateUpdate() {
+  const monthList = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const query = dateTable.createQuery();
+  query.where = "category = 'Trees'";
+
+  return dateTable.queryFeatures(query).then((response: any) => {
+    const stats = response.features;
+    const dates = stats.map((result: any) => {
+      const date = new Date(result.attributes.date);
+      const year = date.getFullYear();
+      const month = monthList[date.getMonth()];
+      const day = date.getDate();
+      const final = year < 1990 ? '' : `${month} ${day}, ${year}`;
+      return final;
+    });
+    return dates;
+  });
+}
 
 export async function generateTreeCuttingData() {
   var total_tcp = new StatisticDefinition({
