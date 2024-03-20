@@ -11,7 +11,9 @@ import {
   treeCompensationLayer,
   lotLayer,
   constructionBoundaryLayer,
+  commemorativeTreeLayer,
 } from './layers';
+import { zoomToLayer } from './Query';
 
 export const map = new Map({
   basemap: 'dark-gray-vector', // "streets-night-vector", basemap
@@ -30,7 +32,7 @@ const treeGroupLayer = new GroupLayer({
   title: 'Trees',
   visible: true,
   visibilityMode: 'exclusive',
-  layers: [treeCompensationLayer, treeCuttingLayer],
+  layers: [treeCompensationLayer, treeCuttingLayer, commemorativeTreeLayer],
 });
 
 // Change the layer order by using index numbers in map.add
@@ -64,7 +66,11 @@ export const layerList = new LayerList({
       };
     }
 
-    item.title === 'Land Acquisition' ? (item.visible = false) : (item.visible = true);
+    item.title === 'Land Acquisition' ||
+    item.title === 'Status of Tree Cutting' ||
+    item.title === 'Status of Tree Compensation'
+      ? (item.visible = false)
+      : (item.visible = true);
   },
 });
 

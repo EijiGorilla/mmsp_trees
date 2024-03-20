@@ -363,13 +363,13 @@ export const treeCuttingLayer = new FeatureLayer({
 
 // Commemorative trees
 const commemorativeRenderer = new UniqueValueRenderer({
-  field: 'Common_Nam',
+  field: 'Remarks1',
   uniqueValueInfos: [
     {
-      value: 'Narra',
-      label: 'Narra',
+      value: 'Existing',
+      label: 'Existing',
       symbol: new SimpleMarkerSymbol({
-        size: 5,
+        size: 10,
         color: '#FFFF00', // the first two letters dictate transparency.
         outline: {
           width: 0.5,
@@ -378,10 +378,10 @@ const commemorativeRenderer = new UniqueValueRenderer({
       }),
     },
     {
-      value: 'Molave',
-      label: 'Molave',
+      value: 'Proposed',
+      label: 'Proposed Location',
       symbol: new SimpleMarkerSymbol({
-        size: 5,
+        size: 10,
         color: '#0073ff', // the first two letters dictate transparency.
         outline: {
           width: 0.5,
@@ -407,14 +407,14 @@ const commemorativeLabel = new LabelClass({
   },
 });
 
-const commemorativeTreeLayer = new FeatureLayer({
+export const commemorativeTreeLayer = new FeatureLayer({
   portalItem: {
     id: '4475f1bb9ad04dbda552879188ac1b6c',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  definitionExpression: "Remarks2 = 'Commemorative Trees'",
+  definitionExpression: "Remarks2 = 'Commemorative'",
   elevationInfo: {
     mode: 'on-the-ground',
   },
