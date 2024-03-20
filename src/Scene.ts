@@ -13,7 +13,7 @@ import {
   constructionBoundaryLayer,
   commemorativeTreeLayer,
 } from './layers';
-import { zoomToLayer } from './Query';
+import { highlightTrees } from './Query';
 
 export const map = new Map({
   basemap: 'dark-gray-vector', // "streets-night-vector", basemap
@@ -64,6 +64,10 @@ export const layerList = new LayerList({
         content: 'legend',
         open: true,
       };
+    }
+
+    if (item.title === 'Commemorative Trees') {
+      highlightTrees(commemorativeTreeLayer);
     }
 
     item.title === 'Land Acquisition' ||
