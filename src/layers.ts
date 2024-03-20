@@ -19,6 +19,20 @@ export const dateTable = new FeatureLayer({
 });
 
 /* Station Layer */
+const stationLabels = new LabelClass({
+  labelExpressionInfo: { expression: '$feature.Station1' },
+  symbol: {
+    type: 'text',
+    color: 'black',
+    haloColor: 'white',
+    haloSize: 1,
+    font: {
+      size: 10,
+      weight: 'bold',
+    },
+  },
+});
+
 export const stationLayer = new FeatureLayer({
   portalItem: {
     id: '52d4f29105934e3f95f6b39c7e5fba6e',
@@ -27,7 +41,10 @@ export const stationLayer = new FeatureLayer({
     },
   },
   layerId: 1,
+  labelingInfo: [stationLabels],
+  title: 'Station',
   definitionExpression: "Project = 'MMSP'",
+  //screenSizePerspectiveEnabled: false, // gives constant size regardless of zoom
 });
 
 /* Construction Boundary*/
@@ -396,7 +413,6 @@ const commemorativeLabel = new LabelClass({
   symbol: new TextSymbol({
     color: 'white',
     font: {
-      family: 'Gill Sans',
       size: 12,
       weight: 'bold',
     },

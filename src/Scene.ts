@@ -13,7 +13,7 @@ import {
   constructionBoundaryLayer,
   commemorativeTreeLayer,
 } from './layers';
-import { highlightTrees } from './Query';
+import { highlightTrees, zoomToLayer } from './Query';
 
 export const map = new Map({
   basemap: 'dark-gray-vector', // "streets-night-vector", basemap
@@ -25,7 +25,7 @@ const alignmentGroupLayer = new GroupLayer({
   title: 'Alignment',
   visible: true,
   visibilityMode: 'independent',
-  layers: [stationLayer, constructionBoundaryLayer],
+  layers: [constructionBoundaryLayer, stationLayer],
 });
 
 const treeGroupLayer = new GroupLayer({
@@ -36,9 +36,9 @@ const treeGroupLayer = new GroupLayer({
 });
 
 // Change the layer order by using index numbers in map.add
+map.add(lotLayer);
 map.add(treeGroupLayer);
 map.add(alignmentGroupLayer);
-map.add(lotLayer);
 
 export const view = new MapView({
   container: undefined,
