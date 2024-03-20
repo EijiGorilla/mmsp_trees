@@ -21,7 +21,7 @@ import {
 import '../App.css';
 import * as clusterLabelCreator from '@arcgis/core/smartMapping/labels/clusters';
 import * as clusterPopupCreator from '@arcgis/core/smartMapping/popup/clusters';
-import { CalciteButton } from '@esri/calcite-components-react';
+import { CalciteButton, CalciteLabel } from '@esri/calcite-components-react';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
@@ -93,9 +93,7 @@ const TreeCompensationChart = ({ contractp, stationname }: any) => {
     // Create chart
     var chart = root.container.children.push(
       am5percent.PieChart.new(root, {
-        //centerY: am5.percent(-2), //-10
-        y: am5.percent(-25), // space between pie chart and total lots
-        layout: root.horizontalLayout,
+        layout: root.verticalLayout,
       }),
     );
     chartRef.current = chart;
@@ -110,7 +108,7 @@ const TreeCompensationChart = ({ contractp, stationname }: any) => {
         legendValueText: "{valuePercentTotal.formatNumber('#.')}% ({value})",
         radius: am5.percent(45), // outer radius
         innerRadius: am5.percent(20),
-        marginBottom: -10,
+        scale: 2,
       }),
     );
     pieSeriesRef.current = pieSeries;
@@ -197,12 +195,10 @@ const TreeCompensationChart = ({ contractp, stationname }: any) => {
 
     // Legend
     // https://www.amcharts.com/docs/v5/charts/percent-charts/legend-percent-series/
-    var legend = root.container.children.push(
+    var legend = chart.children.push(
       am5.Legend.new(root, {
         centerX: am5.percent(50),
         x: am5.percent(50),
-        y: am5.percent(48),
-        layout: root.verticalLayout,
       }),
     );
     legendRef.current = legend;
@@ -244,22 +240,20 @@ const TreeCompensationChart = ({ contractp, stationname }: any) => {
     legend.labels.template.setAll({
       oversizedBehavior: 'truncate',
       fill: am5.color('#ffffff'),
-      //textDecoration: "underline"
-      //width: am5.percent(200)
-      //fontWeight: "300"
+      scale: 0.85,
     });
 
     legend.valueLabels.template.setAll({
       textAlign: 'right',
       //width: valueLabelsWidth,
       fill: am5.color('#ffffff'),
-      //fontSize: LEGEND_FONT_SIZE,
+      scale: 0.85,
     });
 
     legend.itemContainers.template.setAll({
       // set space between legend items
-      paddingTop: 1.1,
-      paddingBottom: 2,
+      paddingTop: 3,
+      paddingBottom: 1,
     });
 
     pieSeries.appear(1000, 100);
@@ -337,25 +331,23 @@ const TreeCompensationChart = ({ contractp, stationname }: any) => {
 
   return (
     <>
-      <div className="treesNumberImage">
-        <div>
-          <div className="totalTreesLabel">TOTAL TREES</div>
-          <br />
-          <br />
-          <b className="totalTreesNumber">{thousands_separators(treesNumber[1])} </b>
-        </div>
-        <img
-          src="https://EijiGorilla.github.io/Symbols/Tree_Cutting_Logo.svg"
-          alt="Land Logo"
-          height={'20%'}
-          width={'20%'}
-          style={{ padding: '10px', margin: 'auto' }}
-        />
-      </div>
+      <CalciteLabel>TOTAL TREES</CalciteLabel>
+      <CalciteLabel layout="inline">
+        <b className="totalTreesNumber">
+          {thousands_separators(treesNumber[1])}
+          <img
+            src="https://EijiGorilla.github.io/Symbols/Tree_Cutting_Logo.svg"
+            alt="Land Logo"
+            height={'55px'}
+            width={'55px'}
+            style={{ marginLeft: '175%', display: 'flex', marginTop: '-40%' }}
+          />
+        </b>
+      </CalciteLabel>
       <div
         id={chartID}
         style={{
-          height: '45vh',
+          height: '55vh',
           backgroundColor: 'rgb(0,0,0,0)',
           color: 'white',
           marginBottom: '-1.5vh',

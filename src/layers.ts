@@ -57,7 +57,6 @@ export const constructionBoundaryLayer = new FeatureLayer({
     },
   },
   layerId: 4,
-  outFields: ['*'],
   renderer: ConstructionBoundaryFill,
   definitionExpression: 'MappingBoundary = 1',
   title: 'Construction Boundary',
@@ -160,7 +159,6 @@ export const lotLayer = new FeatureLayer({
   title: 'Land Acquisition',
   renderer: lotLayerStatusRenderer,
   popupEnabled: false,
-  outFields: ['*'],
 });
 
 /* Tree cutting layer */
@@ -317,7 +315,6 @@ export const treeCuttingLayer = new FeatureLayer({
     mode: 'on-the-ground',
   },
   layerId: 1,
-  outFields: ['*'],
   title: 'Status of Tree Cutting',
   renderer: treeCuttingRenderer,
   popupTemplate: {
@@ -357,6 +354,84 @@ export const treeCuttingLayer = new FeatureLayer({
           {
             fieldName: 'Remarks2',
             label: 'Remarks',
+          },
+        ],
+      },
+    ],
+  },
+});
+
+// Commemorative trees
+const commemorativeRenderer = new UniqueValueRenderer({
+  field: 'Common_Nam',
+  uniqueValueInfos: [
+    {
+      value: 'Narra',
+      label: 'Narra',
+      symbol: new SimpleMarkerSymbol({
+        size: 5,
+        color: '#FFFF00', // the first two letters dictate transparency.
+        outline: {
+          width: 0.5,
+          color: 'white',
+        },
+      }),
+    },
+    {
+      value: 'Molave',
+      label: 'Molave',
+      symbol: new SimpleMarkerSymbol({
+        size: 5,
+        color: '#0073ff', // the first two letters dictate transparency.
+        outline: {
+          width: 0.5,
+          color: 'white',
+        },
+      }),
+    },
+  ],
+});
+
+const commemorativeLabel = new LabelClass({
+  symbol: new TextSymbol({
+    color: 'white',
+    font: {
+      family: 'Gill Sans',
+      size: 12,
+      weight: 'bold',
+    },
+  }),
+  labelPlacement: 'above-center',
+  labelExpressionInfo: {
+    expression: '$feature.Common_Nam',
+  },
+});
+
+const commemorativeTreeLayer = new FeatureLayer({
+  portalItem: {
+    id: '4475f1bb9ad04dbda552879188ac1b6c',
+    portal: {
+      url: 'https://gis.railway-sector.com/portal',
+    },
+  },
+  definitionExpression: "Remarks2 = 'Commemorative Trees'",
+  elevationInfo: {
+    mode: 'on-the-ground',
+  },
+  layerId: 1,
+  title: 'Commemorative Trees',
+  renderer: commemorativeRenderer,
+  labelingInfo: [commemorativeLabel],
+  popupTemplate: {
+    title: 'Commemorative Tree',
+    lastEditInfoEnabled: false,
+    content: [
+      {
+        type: 'fields',
+        fieldInfos: [
+          {
+            fieldName: 'Common_Nam',
+            label: 'Common name',
           },
         ],
       },
@@ -586,7 +661,6 @@ export const treeCompensationLayer = new FeatureLayer({
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  outFields: ['*'],
   layerId: 1,
   title: 'Status of Tree Compensation',
   renderer: treeCompensationRenderer,
