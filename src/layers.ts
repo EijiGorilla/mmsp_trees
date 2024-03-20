@@ -332,11 +332,11 @@ export const treeCuttingLayer = new FeatureLayer({
     mode: 'on-the-ground',
   },
   layerId: 1,
-  title: 'Status of Tree Cutting',
+  title: 'Tree Cutting',
   renderer: treeCuttingRenderer,
   popupTemplate: {
     lastEditInfoEnabled: false,
-    returnGeometry: true,
+    // returnGeometry: true,
     content: [
       {
         type: 'fields',
@@ -678,12 +678,12 @@ export const treeCompensationLayer = new FeatureLayer({
     },
   },
   layerId: 1,
-  title: 'Status of Tree Compensation',
+  title: 'Tree Compensation',
   renderer: treeCompensationRenderer,
   popupTemplate: {
     title: '<h5>{Tree_Compe}</h5>',
     lastEditInfoEnabled: false,
-    returnGeometry: true,
+    // returnGeometry: true,
     content: [
       {
         type: 'fields',

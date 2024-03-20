@@ -36,9 +36,9 @@ const treeGroupLayer = new GroupLayer({
 });
 
 // Change the layer order by using index numbers in map.add
+map.add(alignmentGroupLayer);
 map.add(lotLayer);
 map.add(treeGroupLayer);
-map.add(alignmentGroupLayer);
 
 export const view = new MapView({
   container: undefined,
@@ -53,29 +53,56 @@ export const basemaps = new BasemapGallery({
 });
 
 // highlight super urgent
+async function defineActions(event: any) {
+  const { item } = event;
+
+  await item.layer.when();
+
+  if (item.title === 'Commemorative Trees') {
+    item.open = true;
+    item.actionsSections = [
+      [
+        {
+          title: 'Zoom to points',
+          className: 'esri-icon-zoom-to-object',
+          id: 'full-extent',
+        },
+      ],
+      [
+        {
+          title: 'Highlight points',
+          className: 'esri-icon-lightbulb',
+          id: 'highlight-layer',
+        },
+      ],
+    ];
+  }
+
+  if (item.layer.type !== 'group') {
+    item.panel = {
+      content: 'legend',
+      open: true,
+    };
+  }
+
+  item.title === 'Land Acquisition' ? (item.visible = false) : (item.visible = true);
+}
+
 export const layerList = new LayerList({
   view: view,
   selectionEnabled: true,
-  container: undefined,
-  listItemCreatedFunction: (event) => {
-    const item = event.item;
-    if (item.layer.type !== 'group') {
-      item.panel = {
-        content: 'legend',
-        open: true,
-      };
-    }
+  listItemCreatedFunction: defineActions,
+});
 
-    if (item.title === 'Commemorative Trees') {
-      highlightTrees(commemorativeTreeLayer);
-    }
+layerList.on('trigger-action', (event) => {
+  // capture the action id
+  const id = event.action.id;
 
-    item.title === 'Land Acquisition' ||
-    item.title === 'Status of Tree Cutting' ||
-    item.title === 'Status of Tree Compensation'
-      ? (item.visible = false)
-      : (item.visible = true);
-  },
+  if (id === 'full-extent') {
+    zoomToLayer(commemorativeTreeLayer);
+  } else if (id === 'highlight-layer') {
+    highlightTrees(commemorativeTreeLayer);
+  }
 });
 
 const sources = [
