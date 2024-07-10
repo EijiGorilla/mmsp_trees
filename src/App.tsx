@@ -48,6 +48,14 @@ function App() {
   const [stationName, setStationName] = useState<null | any>(null);
   const [stationNameList, setStationNameList] = useState<null | undefined | any>([]);
 
+  //
+  const [treeCuttingLayerLoaded, setTreeCuttingLayerLoaded] = useState<any>();
+  useEffect(() => {
+    treeCuttingLayer.load().then(() => {
+      setTreeCuttingLayerLoaded(treeCuttingLayer.loadStatus);
+    });
+  });
+
   //**** Create dropdonw list */
   useEffect(() => {
     const dropdownData = new DropDownData({
@@ -145,7 +153,7 @@ function App() {
           </CalciteTabNav>
           {/* CalciteTab: Tree Cutting */}
           <CalciteTab>
-            {tabList === 'TreeCutting' && (
+            {tabList === 'TreeCutting' && treeCuttingLayerLoaded === 'loaded' && (
               <TreeCuttingChart
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 stationname={stationName === null ? '' : stationName.name}
