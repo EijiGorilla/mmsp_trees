@@ -91,6 +91,8 @@ async function defineActions(event: any) {
 export const layerList = new LayerList({
   view: view,
   selectionEnabled: true,
+  selectionMode: 'multiple',
+  visibilityAppearance: 'checkbox',
   listItemCreatedFunction: defineActions,
 });
 
@@ -129,7 +131,7 @@ const searchWidget = new Search({
 const searchExpand = new Expand({
   view: view,
   content: searchWidget,
-  expandIconClass: 'esri-icon-search',
+  expandIcon: 'esri-icon-search',
   group: 'top-right',
 });
 view.ui.add(searchExpand, {
